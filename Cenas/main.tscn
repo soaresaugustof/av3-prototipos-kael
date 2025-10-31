@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=4 uid="uid://b456ptsbwt4mh"]
+
+[ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="1_74bqr"]
+[ext_resource type="PackedScene" uid="uid://dnm0f5ydoa0xq" path="res://Cenas/kael.tscn" id="1_x3hk2"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_74bqr"]
+texture = ExtResource("1_74bqr")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_ruij7"]
+physics_layer_0/collision_layer = 2
+sources/0 = SubResource("TileSetAtlasSource_74bqr")
+
+[node name="main" type="Node"]
+
+[node name="Kael" parent="." instance=ExtResource("1_x3hk2")]
+position = Vector2(99, 542)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(223, 475)
+zoom = Vector2(2.75, 2.75)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAABACQAAAAAAAEAAAACACQAAAAAAAEAAAADACQAAAAAAAEAAAAEACQAAAAAAAEAAAAFACQAAAAAAAEAAAAGACQAAAAAAAEAAAAHACQAAAAAAAEAAAAIACQAAAAAAAEAAAAJACQAAAAAAAEAAAAKACQAAAAAAAEAAAALACQAAAAAAAEAAAAMACQAAAAAAAEAAAANACQAAAAAAAEAAAAOACQAAAAAAAEAAAAPACQAAAAAAAEAAAAQACQAAAAAAAEAAAARACQAAAAAAAEAAAASACQAAAAAAAEAAAA=")
+tile_set = SubResource("TileSet_ruij7")
