@@ -30,3 +30,19 @@ func _physics_process(delta: float) -> void:
 	$AnimatedSprite2D._trigger_animation(velocity, direction)
 	
 	move_and_slide()
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area is Area2D:
+		get_tree().reload_current_scene()
+
+
+func _on_digrafo_1_area_entered(area: Area2D) -> void:
+	$"../Digrafo1/AnimatedSprite2D".visible = false
+
+
+func _on_digrafo_2_area_entered(area: Area2D) -> void:
+	$"../Digrafo2/AnimatedSprite2D".visible = false
+
+
+func _on_digrafo_3_area_entered(area: Area2D) -> void:
+	$"../Digrafo3/AnimatedSprite2D".visible = false
