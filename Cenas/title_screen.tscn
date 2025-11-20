@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpup3c0fm8ec3"]
+
+[ext_resource type="Script" uid="uid://dfl3r8ynipwop" path="res://Cenas/title_screen.gd" id="1_in1uv"]
+[ext_resource type="Texture2D" uid="uid://dalm8v4off5gg" path="res://Sprites/background.png" id="1_rg7y1"]
+[ext_resource type="Texture2D" uid="uid://ceaobb5ttigf3" path="res://Sprites/adventurer-idle-00.png" id="2_in1uv"]
+
+[sub_resource type="Theme" id="Theme_rg7y1"]
+Button/colors/font_color = Color(1, 1, 1, 1)
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_in1uv")
+
+[node name="bg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_rg7y1")
+expand_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 250.0
+offset_right = -885.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="logo" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="START" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_rg7y1")
+text = "INICIAR
+"
+
+[node name="SAIR" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "SAIR
+"
+
+[node name="MOCHI" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 170.0
+offset_top = 211.0
+offset_right = 1062.0
+offset_bottom = 1107.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_in1uv")
+expand_mode = 2
+flip_h = true
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/START" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SAIR" to="." method="_on_sair_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dnm0f5ydoa0xq"]
+[gd_scene load_steps=20 format=3 uid="uid://dnm0f5ydoa0xq"]
 
 [ext_resource type="Script" uid="uid://clmptehyegyos" path="res://Cenas/kael.gd" id="1_1k1ye"]
 [ext_resource type="Texture2D" uid="uid://ceaobb5ttigf3" path="res://Sprites/adventurer-idle-00.png" id="2_6xnpp"]
@@ -14,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://meggp5l3dnnj" path="res://Sprites/adventurer-run-03.png" id="14_1ekv6"]
 [ext_resource type="Texture2D" uid="uid://dv7pitmb3l12r" path="res://Sprites/adventurer-run-04.png" id="15_6pohe"]
 [ext_resource type="Texture2D" uid="uid://b3pqhdg7dq46" path="res://Sprites/adventurer-run-05.png" id="16_8bp65"]
+[ext_resource type="AudioStream" uid="uid://d2k45ygskcsk3" path="res://Sounds/jump.wav" id="16_smcra"]
 [ext_resource type="Script" uid="uid://dyy6q2p5b7xlj" path="res://Cenas/animated_sprite_2d.gd" id="16_vmco2"]
+[ext_resource type="AudioStream" uid="uid://dwvhcb5ophxuk" path="res://Sounds/pontuacao.wav" id="17_6xnpp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_smcra"]
 animations = [{
@@ -104,5 +106,14 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 1.4)
 shape = SubResource("RectangleShape2D_6xnpp")
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_smcra")
+
+[node name="RestoreDigrafo" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_6xnpp")
+
+[node name="Attack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_smcra")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

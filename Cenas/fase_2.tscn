@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://cp1g8y042q5o3"]
+[gd_scene load_steps=11 format=4 uid="uid://cp1g8y042q5o3"]
 
 [ext_resource type="PackedScene" uid="uid://dnm0f5ydoa0xq" path="res://Cenas/kael.tscn" id="1_o5jdt"]
 [ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="2_15i4r"]
 [ext_resource type="Texture2D" uid="uid://dfgaf5f6t2cm1" path="res://Sprites/Floor Tiles1.png" id="4_mvsrr"]
 [ext_resource type="Texture2D" uid="uid://dalm8v4off5gg" path="res://Sprites/background.png" id="5_jf64f"]
 [ext_resource type="Texture2D" uid="uid://2pxk5hnflwab" path="res://Sprites/background2.png" id="6_0v05o"]
+[ext_resource type="AudioStream" uid="uid://4ilolb3n1wb7" path="res://Sounds/fase2.wav" id="6_jf64f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6odrp"]
 texture = ExtResource("2_15i4r")
@@ -853,5 +854,9 @@ texture = ExtResource("6_0v05o")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(1060.25, 653)
 shape = SubResource("RectangleShape2D_41ryc")
+
+[node name="MusicaFundo" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_jf64f")
+autoplay = true
 
 [connection signal="area_entered" from="Area2D" to="Kael" method="_on_area_2d_area_entered"]
