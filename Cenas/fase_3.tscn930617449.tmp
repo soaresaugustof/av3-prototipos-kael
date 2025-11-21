@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://bmmnlfdcg0ulv"]
+[gd_scene load_steps=16 format=4 uid="uid://bmmnlfdcg0ulv"]
 
 [ext_resource type="PackedScene" uid="uid://dnm0f5ydoa0xq" path="res://Cenas/kael.tscn" id="1_38057"]
 [ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="2_5q4kw"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cq33hqs23ofu4" path="res://Cenas/hud.tscn" id="5_pgpv6"]
 [ext_resource type="Texture2D" uid="uid://c48ud7cx5wkbf" path="res://Sprites/Digrafos/Sc.png" id="7_kg7lx"]
 [ext_resource type="AudioStream" uid="uid://c68qdga4ywh2d" path="res://Sounds/digrafo.wav" id="8_rk7hk"]
-[ext_resource type="PackedScene" uid="uid://bvt7ojst231xv" path="res://Cenas/vorath.tscn" id="9_rk7hk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7bkjt"]
 texture = ExtResource("2_5q4kw")
@@ -875,9 +874,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kg7lx"]
-size = Vector2(31, 141.5)
-
 [node name="fase3" type="Node"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -887,7 +883,6 @@ tile_set = SubResource("TileSet_mtfx8")
 
 [node name="Kael" parent="." instance=ExtResource("1_38057")]
 position = Vector2(84, 534)
-proxima_fase_path = "res://Cenas/win.tscn"
 nome_da_fase = "Fase Final: Torre do Silêncio"
 
 [node name="HUDKael" type="CanvasLayer" parent="Kael"]
@@ -948,7 +943,7 @@ stream = ExtResource("8_rk7hk")
 autoplay = true
 
 [node name="Digrafo3" type="Area2D" parent="."]
-position = Vector2(1917, 511)
+position = Vector2(1828, 478)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Digrafo3"]
 shape = SubResource("RectangleShape2D_cdxkg")
@@ -961,19 +956,7 @@ sprite_frames = SubResource("SpriteFrames_pw5qn")
 stream = ExtResource("8_rk7hk")
 autoplay = true
 
-[node name="FimDeCena" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FimDeCena"]
-position = Vector2(2098, 492)
-shape = SubResource("RectangleShape2D_kg7lx")
-debug_color = Color(0.47852963, 0.5883302, 1.92523e-07, 0.41960785)
-
-[node name="Vorath" parent="." instance=ExtResource("9_rk7hk")]
-position = Vector2(1990, 535)
-scale = Vector2(-1, 1)
-
 [connection signal="area_entered" from="Area2D" to="Kael" method="_on_area_2d_area_entered"]
 [connection signal="area_entered" from="Digrafo1" to="Kael" method="_on_digrafo_1_area_entered"]
 [connection signal="area_entered" from="Digrafo2" to="Kael" method="_on_digrafo_2_area_entered"]
 [connection signal="area_entered" from="Digrafo3" to="Kael" method="_on_digrafo_3_area_entered"]
-[connection signal="body_entered" from="FimDeCena" to="Kael" method="_on_fim_de_cena_body_entered"]

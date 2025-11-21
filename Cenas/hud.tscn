@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cq33hqs23ofu4"]
 
 [ext_resource type="Script" uid="uid://djco1a81ubalk" path="res://Cenas/hud.gd" id="1_kgovw"]
-[ext_resource type="FontFile" uid="uid://cwbt2ugsjq30h" path="res://font/Dihil.ttf" id="2_1pfdj"]
+[ext_resource type="FontFile" uid="uid://2jb60851ilq6" path="res://font/antiquity-print.ttf" id="2_1pfdj"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_kgovw")
@@ -16,15 +16,13 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
-grow_horizontal = 2
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 474.0
+offset_bottom = 115.0
+scale = Vector2(0.7, 0.7)
 theme_override_fonts/font = ExtResource("2_1pfdj")
 theme_override_font_sizes/font_size = 32
-text = "DIGRAFOS COLETADOS: 0/3
+text = "Dígrafos coletados: 0/3
 "
 horizontal_alignment = 1

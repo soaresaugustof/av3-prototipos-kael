@@ -22,18 +22,12 @@ class_name Kael
 
 @export var subtitle_label: Label 
 
-# Dicionário de narrações (texto e caminho para o arquivo de áudio)
-var narration_data = {
-	"Digrafo1": {"text": "A chave do ninho te guia no que lhe trouxe sossego.", "audio_path": "res://audio/fala_digrafo_1.ogg", "duration": 4.5},
-	"Digrafo2": {"text": "Com a união dos fragmentos, o mapa se revela!", "audio_path": "res://audio/fala_digrafo_2.ogg", "duration": 3.0},
-	"Digrafo3": {"text": "O conhecimento está restaurado. Avance!", "audio_path": "res://audio/fala_digrafo_3.ogg", "duration": 2.5}
-	# Adicione mais conforme necessário
-}
+@export var MaxScore = 3
+@export var score = 0
+
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-# --- NÓS DE ÁUDIO ---
-# Estes nós DEVEM ser filhos do nó Kael.
 @onready var jump = $Jump
 @onready var restore_digrafo = $RestoreDigrafo
 @onready var narration_player = $NarrationPlayer
@@ -41,18 +35,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _ready() -> void:
 	if is_instance_valid(nome_fase) and is_instance_valid(hud_timer):
 		
-		# --- TESTE DE EXECUÇÃO ---
 		print("HUD de Fase: Pronto. Tentando exibir: ", nome_da_fase)
 		
 		nome_fase.text = nome_da_fase
 		hud_timer.wait_time = hud_display_time
 		
-		# 2. Conecta o sinal do Timer para esconder o HUD
-		# Verifica se a conexão já existe antes de tentar conectar (boa prática)
 		if not hud_timer.timeout.is_connected(hide_fase_hud):
 			hud_timer.timeout.connect(hide_fase_hud)
 		
-		# 3. Exibe o HUD e inicia o Timer
 		show_fase_hud()
 	else:
 		print("ERRO CRÍTICO: Um ou mais nós do HUD não foram encontrados. (HUDKael/NomeFase ou HUDKael/HUDTimer)")
@@ -60,14 +50,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	# --- Lógica da Gravidade e Movimento ---
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	
-	# Lógica de Pulo e SFX
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
-		jump.play() # Toca o som de pulo
+		jump.play()
 	
 	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y *= 0.5
@@ -83,30 +71,22 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	
-	# --- Lógica de Volume Dinâmico (Spatial) ---
 	_update_digrafo_volume()
 
 
-# Função para ajustar o volume do SomDigrafo com base na proximidade do Kael ao Dígrafo
 func _update_digrafo_volume():
-	# Assume que todos os Dígrafos são irmãos do nó Kael.
 	var digrafo_nodes = get_parent().get_children().filter(
 		func(node): return node.name.begins_with("Digrafo")
 	)
 	
 	for digrafo in digrafo_nodes:
-		# Busca o nó AudioStreamPlayer que é filho do Dígrafo
 		var som_digrafo = digrafo.find_child("SomDigrafo")
 		
-		# O volume dinâmico só é relevante se o dígrafo ainda não foi coletado (e o nó existe)
 		if is_instance_valid(som_digrafo) and digrafo.find_child("AnimatedSprite2D").visible:
 			var distance = global_position.distance_to(digrafo.global_position)
 			
-			# Mapeamento de Proximidade: 1.0 (Perto) -> 0.0 (Longe)
-			# Clamp garante que o valor fique entre 0.0 e 1.0
 			var proximity = 1.0 - clamp(distance / digrafo_sound_falloff_distance, 0.0, 1.0)
 			
-			# Conversão para Decibéis (dB): De -50 dB (mudo) a 0 dB (volume máximo)
 			var min_db = -50.0
 			var max_db = 0.0
 			var new_volume_db = lerp(min_db, max_db, proximity)
@@ -114,7 +94,6 @@ func _update_digrafo_volume():
 			som_digrafo.volume_db = new_volume_db
 
 
-# Função auxiliar para disparar a narração e as legendas
 func play_narration(data: Dictionary):
 	if is_instance_valid(narration_player):
 		# 1. Carrega e toca o áudio narrado
@@ -123,11 +102,9 @@ func play_narration(data: Dictionary):
 		narration_player.play()
 	
 	if is_instance_valid(subtitle_label):
-		# 2. Exibe a legenda
 		subtitle_label.text = data.text
 		subtitle_label.show()
 		
-		# 3. Cria um Timer para esconder a legenda após a duração da fala
 		get_tree().create_timer(data.duration).timeout.connect(hide_subtitle)
 
 func hide_subtitle():
@@ -135,66 +112,71 @@ func hide_subtitle():
 		subtitle_label.hide()
 
 
-# --- Funções de Sinal (Restauração de Dígrafos) ---
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	# Colisão de morte/reinício
 	if area is Area2D:
-		get_tree().reload_current_scene()
+		get_tree().change_scene_to_file("res://Cenas/game_over.tscn")
 
 
 func _on_digrafo_1_area_entered(area: Area2D) -> void:
 	var digrafo_node = $"../Digrafo1"
 	
-	# 1. Para o som espacial (SomDigrafo) e oculta o sprite
 	var som_digrafo = digrafo_node.find_child("SomDigrafo")
 	if is_instance_valid(som_digrafo):
 		som_digrafo.stop()
-		som_digrafo.queue_free() # Remove o nó de som espacial 
+		som_digrafo.queue_free()
 		
 	digrafo_node.find_child("AnimatedSprite2D").visible = false
+	$"../Digrafo1/CollisionShape2D".queue_free()
 
-	# 2. Toca o SFX de pontuação/coleta
 	restore_digrafo.play() 
 
-	# 3. Dispara a narração e legendas
-	play_narration(narration_data["Digrafo1"])
+	score += 1
 
 
 func _on_digrafo_2_area_entered(area: Area2D) -> void:
 	var digrafo_node = $"../Digrafo2"
 	
-	# 1. Para o som espacial (SomDigrafo) e oculta o sprite
 	var som_digrafo = digrafo_node.find_child("SomDigrafo")
 	if is_instance_valid(som_digrafo):
 		som_digrafo.stop()
 		som_digrafo.queue_free()
 		
 	digrafo_node.find_child("AnimatedSprite2D").visible = false
+	$"../Digrafo2/CollisionShape2D".queue_free()
 
-	# 2. Toca o SFX de pontuação/coleta
 	restore_digrafo.play() 
 
-	# 3. Dispara a narração e legendas
-	play_narration(narration_data["Digrafo2"])
+	score += 1
 
 
 func _on_digrafo_3_area_entered(area: Area2D) -> void:
 	var digrafo_node = $"../Digrafo3"
 	
-	# 1. Para o som espacial (SomDigrafo) e oculta o sprite
 	var som_digrafo = digrafo_node.find_child("SomDigrafo")
 	if is_instance_valid(som_digrafo):
 		som_digrafo.stop()
 		som_digrafo.queue_free()
 		
 	digrafo_node.find_child("AnimatedSprite2D").visible = false
+	$"../Digrafo3/CollisionShape2D".queue_free()
 
-	# 2. Toca o SFX de pontuação/coleta
 	restore_digrafo.play() 
 
-	# 3. Dispara a narração e legendas
-	play_narration(narration_data["Digrafo3"])
+	score += 1
+	
+	if nome_da_fase == "Fase Final: Torre do Silêncio":
+		var vorath_node = get_parent().find_child("Vorath")
+		
+		if is_instance_valid(vorath_node):
+			print("Último Dígrafo (Digrafo3) coletado! Acionando derrota do Vorath.")
+			
+			(vorath_node as Vorath).defeat()
+		else:
+			if is_instance_valid(nome_fase):
+				nome_fase.hide()
+			
+			get_tree().quit()
 
 
 func _on_fim_de_cena_body_entered(body: Node2D) -> void:

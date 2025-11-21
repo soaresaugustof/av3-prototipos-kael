@@ -3,4 +3,4 @@ extends CanvasLayer
 @onready var kael: Kael = $"../Kael"
 
 func _process(delta: float) -> void:
-	label.text = "DIGRAFOS COLETADOS: " + str(kael.score) + "/" + str(kael.MaxScore)
+	label.text = "Dígrafos coletados: " + str(kael.score) + "/" + str(kael.MaxScore)
