@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://b456ptsbwt4mh"]
+[gd_scene load_steps=24 format=4 uid="uid://b456ptsbwt4mh"]
 
 [ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="1_74bqr"]
 [ext_resource type="Script" uid="uid://puybw3u34ccx" path="res://Cenas/main.gd" id="1_330ga"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://dr8dxchb2kk8u" path="res://Sounds/fase1.wav" id="14_330ga"]
 [ext_resource type="Texture2D" uid="uid://c48ud7cx5wkbf" path="res://Sprites/Digrafos/Sc.png" id="14_xaxpv"]
 [ext_resource type="AudioStream" uid="uid://c68qdga4ywh2d" path="res://Sounds/digrafo.wav" id="16_xaxpv"]
+[ext_resource type="PackedScene" uid="uid://cq33hqs23ofu4" path="res://Cenas/hud.tscn" id="17_ir430"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_74bqr"]
 texture = ExtResource("1_74bqr")
@@ -950,7 +951,7 @@ position = Vector2(343, 482)
 shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo1"]
-position = Vector2(2.842171e-14, -1.1368684e-13)
+position = Vector2(2.84217e-14, -1.13687e-13)
 sprite_frames = SubResource("SpriteFrames_3ea3k")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo1"]
@@ -964,7 +965,7 @@ position = Vector2(1319, 504)
 shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo2"]
-position = Vector2(2.842171e-14, -1.1368684e-13)
+position = Vector2(2.84217e-14, -1.13687e-13)
 sprite_frames = SubResource("SpriteFrames_3ea3k")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo2"]
@@ -978,7 +979,7 @@ position = Vector2(1639, 478)
 shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo3"]
-position = Vector2(2.842171e-14, -1.1368684e-13)
+position = Vector2(2.84217e-14, -1.13687e-13)
 sprite_frames = SubResource("SpriteFrames_3ea3k")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo3"]
@@ -989,6 +990,8 @@ autoplay = true
 stream = ExtResource("14_330ga")
 volume_db = -2.019
 autoplay = true
+
+[node name="HUD" parent="." instance=ExtResource("17_ir430")]
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_entered" from="Area2D" to="Kael" method="_on_area_2d_area_entered"]

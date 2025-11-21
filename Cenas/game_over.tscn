@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgo3m6dvt260"]
+
+[ext_resource type="Script" uid="uid://dme2mo4bickw0" path="res://Cenas/game_over.gd" id="1_7y2ld"]
+[ext_resource type="Texture2D" uid="uid://c8faontq2qyy" path="res://Sprites/game_over.png" id="2_glpug"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yxx3c"]
+
+[node name="Game over" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7y2ld")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0219141, 0.013357, 1.50409e-09, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -55.0
+offset_right = 84.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Game over" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_glpug")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yxx3c")
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yxx3c")
+
+[node name="Restart" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Reiniciar"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Sair
+"
+
+[connection signal="pressed" from="VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnoyvxpewvot5"]
+
+[ext_resource type="Texture2D" uid="uid://dwdb12fisu27x" path="res://Sprites/vit.png" id="1_dyqrr"]
+[ext_resource type="Script" uid="uid://cdoxiv3xi33w2" path="res://Cenas/win.gd" id="1_khfk1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_khfk1"]
+
+[node name="Win" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_khfk1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -515.0
+offset_top = -175.5
+offset_right = 515.0
+offset_bottom = 175.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="vit" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_dyqrr")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_khfk1")
+
+[node name="Restart" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Reiniciar"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_khfk1")
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Sair"
+
+[connection signal="pressed" from="VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

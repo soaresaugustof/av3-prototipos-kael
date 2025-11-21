@@ -6,6 +6,8 @@ class_name Kael
 @export var speed = 200
 @export var jump_velocity = -350
 @export var run_speed_damping = 0.5
+@export var MaxScore = 3
+@export var score = 0
 
 @export_group("Audio")
 # Distância MÁXIMA de onde o som espacial do dígrafo é audível (em pixels).
@@ -134,6 +136,7 @@ func _on_digrafo_1_area_entered(area: Area2D) -> void:
 
 	# 3. Dispara a narração e legendas
 	play_narration(narration_data["Digrafo1"])
+	score += 1
 
 
 func _on_digrafo_2_area_entered(area: Area2D) -> void:
@@ -152,6 +155,7 @@ func _on_digrafo_2_area_entered(area: Area2D) -> void:
 
 	# 3. Dispara a narração e legendas
 	play_narration(narration_data["Digrafo2"])
+	score += 1
 
 
 func _on_digrafo_3_area_entered(area: Area2D) -> void:
@@ -170,3 +174,4 @@ func _on_digrafo_3_area_entered(area: Area2D) -> void:
 
 	# 3. Dispara a narração e legendas
 	play_narration(narration_data["Digrafo3"])
+	score += 1

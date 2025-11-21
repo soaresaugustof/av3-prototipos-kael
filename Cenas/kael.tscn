@@ -86,7 +86,7 @@ script = ExtResource("1_1k1ye")
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_smcra")
 animation = &"run"
-frame_progress = 0.3858607
+frame_progress = 0.385861
 script = ExtResource("16_vmco2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://cp1g8y042q5o3"]
+[gd_scene load_steps=12 format=4 uid="uid://cp1g8y042q5o3"]
 
 [ext_resource type="PackedScene" uid="uid://dnm0f5ydoa0xq" path="res://Cenas/kael.tscn" id="1_o5jdt"]
 [ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="2_15i4r"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dalm8v4off5gg" path="res://Sprites/background.png" id="5_jf64f"]
 [ext_resource type="Texture2D" uid="uid://2pxk5hnflwab" path="res://Sprites/background2.png" id="6_0v05o"]
 [ext_resource type="AudioStream" uid="uid://4ilolb3n1wb7" path="res://Sounds/fase2.wav" id="6_jf64f"]
+[ext_resource type="PackedScene" uid="uid://cq33hqs23ofu4" path="res://Cenas/hud.tscn" id="7_0v05o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6odrp"]
 texture = ExtResource("2_15i4r")
@@ -836,8 +837,8 @@ motion_mirroring = Vector2(549, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Plan5"]
 texture_repeat = 2
-position = Vector2(222.26445, 500.51196)
-scale = Vector2(0.5367665, 0.5851111)
+position = Vector2(222.264, 500.512)
+scale = Vector2(0.536767, 0.585111)
 texture = ExtResource("5_jf64f")
 
 [node name="Plan4" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -845,8 +846,8 @@ position = Vector2(54, -28)
 motion_mirroring = Vector2(436, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Plan4"]
-position = Vector2(167.16968, 525.88403)
-scale = Vector2(0.42600328, 0.4648751)
+position = Vector2(167.17, 525.884)
+scale = Vector2(0.426003, 0.464875)
 texture = ExtResource("6_0v05o")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -858,5 +859,7 @@ shape = SubResource("RectangleShape2D_41ryc")
 [node name="MusicaFundo" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_jf64f")
 autoplay = true
+
+[node name="HUD" parent="." instance=ExtResource("7_0v05o")]
 
 [connection signal="area_entered" from="Area2D" to="Kael" method="_on_area_2d_area_entered"]
