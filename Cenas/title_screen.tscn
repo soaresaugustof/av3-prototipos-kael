@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cpup3c0fm8ec3"]
+[gd_scene load_steps=5 format=3 uid="uid://cpup3c0fm8ec3"]
 
 [ext_resource type="Script" uid="uid://dfl3r8ynipwop" path="res://Cenas/title_screen.gd" id="1_in1uv"]
 [ext_resource type="Texture2D" uid="uid://dalm8v4off5gg" path="res://Sprites/background.png" id="1_rg7y1"]
 [ext_resource type="Texture2D" uid="uid://ceaobb5ttigf3" path="res://Sprites/adventurer-idle-00.png" id="2_in1uv"]
-[ext_resource type="FontFile" uid="uid://cwbt2ugsjq30h" path="res://font/Dihil.ttf" id="3_848dy"]
 
 [sub_resource type="Theme" id="Theme_rg7y1"]
 Button/colors/font_color = Color(1, 1, 1, 1)
@@ -52,13 +51,11 @@ layout_mode = 2
 [node name="START" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = SubResource("Theme_rg7y1")
-theme_override_fonts/font = ExtResource("3_848dy")
 text = "INICIAR
 "
 
 [node name="SAIR" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_848dy")
 text = "SAIR
 "
 

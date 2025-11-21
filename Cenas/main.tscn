@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=4 uid="uid://b456ptsbwt4mh"]
+[gd_scene load_steps=25 format=4 uid="uid://b456ptsbwt4mh"]
 
 [ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="1_74bqr"]
 [ext_resource type="Script" uid="uid://puybw3u34ccx" path="res://Cenas/main.gd" id="1_330ga"]
 [ext_resource type="PackedScene" uid="uid://dnm0f5ydoa0xq" path="res://Cenas/kael.tscn" id="1_x3hk2"]
+[ext_resource type="FontFile" uid="uid://2jb60851ilq6" path="res://font/antiquity-print.ttf" id="3_ir430"]
 [ext_resource type="Texture2D" uid="uid://dfgaf5f6t2cm1" path="res://Sprites/Floor Tiles1.png" id="3_lb8y5"]
 [ext_resource type="Texture2D" uid="uid://cg84kifh6l12d" path="res://Sprites/10_Sky.png" id="5_ja1os"]
 [ext_resource type="Texture2D" uid="uid://bd4p0phws3jxi" path="res://Sprites/09_Forest.png" id="6_qns0q"]
@@ -16,7 +17,6 @@
 [ext_resource type="AudioStream" uid="uid://dr8dxchb2kk8u" path="res://Sounds/fase1.wav" id="14_330ga"]
 [ext_resource type="Texture2D" uid="uid://c48ud7cx5wkbf" path="res://Sprites/Digrafos/Sc.png" id="14_xaxpv"]
 [ext_resource type="AudioStream" uid="uid://c68qdga4ywh2d" path="res://Sounds/digrafo.wav" id="16_xaxpv"]
-[ext_resource type="PackedScene" uid="uid://cq33hqs23ofu4" path="res://Cenas/hud.tscn" id="17_ir430"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_74bqr"]
 texture = ExtResource("1_74bqr")
@@ -814,11 +814,33 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xaxpv"]
+size = Vector2(31, 141.5)
+
 [node name="main" type="Node"]
 script = ExtResource("1_330ga")
 
 [node name="Kael" parent="." instance=ExtResource("1_x3hk2")]
 position = Vector2(121, 555)
+proxima_fase_path = "res://Cenas/fase_2.tscn"
+nome_da_fase = "Fase 1: Pântano de Nhálea"
+
+[node name="HUDKael" type="CanvasLayer" parent="Kael"]
+
+[node name="NomeFase" type="Label" parent="Kael/HUDKael"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.2784314, 0.32156864, 1)
+theme_override_fonts/font = ExtResource("3_ir430")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUDTimer" type="Timer" parent="Kael/HUDKael"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-1, 0)
@@ -951,7 +973,7 @@ position = Vector2(343, 482)
 shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo1"]
-position = Vector2(2.84217e-14, -1.13687e-13)
+position = Vector2(2.842171e-14, -1.1368684e-13)
 sprite_frames = SubResource("SpriteFrames_3ea3k")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo1"]
@@ -965,7 +987,7 @@ position = Vector2(1319, 504)
 shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo2"]
-position = Vector2(2.84217e-14, -1.13687e-13)
+position = Vector2(2.842171e-14, -1.1368684e-13)
 sprite_frames = SubResource("SpriteFrames_3ea3k")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo2"]
@@ -979,7 +1001,7 @@ position = Vector2(1639, 478)
 shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo3"]
-position = Vector2(2.84217e-14, -1.13687e-13)
+position = Vector2(2.842171e-14, -1.1368684e-13)
 sprite_frames = SubResource("SpriteFrames_3ea3k")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo3"]
@@ -991,10 +1013,16 @@ stream = ExtResource("14_330ga")
 volume_db = -2.019
 autoplay = true
 
-[node name="HUD" parent="." instance=ExtResource("17_ir430")]
+[node name="FimDeCena" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FimDeCena"]
+position = Vector2(2022, 508)
+shape = SubResource("RectangleShape2D_xaxpv")
+debug_color = Color(0.47852963, 0.5883302, 1.92523e-07, 0.41960785)
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_entered" from="Area2D" to="Kael" method="_on_area_2d_area_entered"]
 [connection signal="area_entered" from="Digrafo1" to="Kael" method="_on_digrafo_1_area_entered"]
 [connection signal="area_entered" from="Digrafo2" to="Kael" method="_on_digrafo_2_area_entered"]
 [connection signal="area_entered" from="Digrafo3" to="Kael" method="_on_digrafo_3_area_entered"]
+[connection signal="body_entered" from="FimDeCena" to="Kael" method="_on_fim_de_cena_body_entered"]

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dnm0f5ydoa0xq" path="res://Cenas/kael.tscn" id="1_38057"]
 [ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="2_5q4kw"]
+[ext_resource type="FontFile" uid="uid://2jb60851ilq6" path="res://font/antiquity-print.ttf" id="2_mtfx8"]
 [ext_resource type="AudioStream" uid="uid://8x2j1jkav0vx" path="res://Sounds/fase3.wav" id="3_7bkjt"]
-[ext_resource type="PackedScene" uid="uid://cq33hqs23ofu4" path="res://Cenas/hud.tscn" id="4_mtfx8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7bkjt"]
 texture = ExtResource("2_5q4kw")
@@ -34,6 +34,23 @@ sources/0 = SubResource("TileSetAtlasSource_7bkjt")
 
 [node name="Kael" parent="." instance=ExtResource("1_38057")]
 position = Vector2(84, 534)
+nome_da_fase = "Fase Final: Torre do Silêncio"
+
+[node name="HUDKael" type="CanvasLayer" parent="Kael"]
+
+[node name="NomeFase" type="Label" parent="Kael/HUDKael"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_mtfx8")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUDTimer" type="Timer" parent="Kael/HUDKael"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-1, 0)
@@ -43,5 +60,3 @@ tile_set = SubResource("TileSet_mtfx8")
 [node name="MusicaFundo" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_7bkjt")
 autoplay = true
-
-[node name="HUD" parent="." instance=ExtResource("4_mtfx8")]

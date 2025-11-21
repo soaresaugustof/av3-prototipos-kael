@@ -6,16 +6,20 @@ class_name Kael
 @export var speed = 200
 @export var jump_velocity = -350
 @export var run_speed_damping = 0.5
-@export var MaxScore = 3
-@export var score = 0
+
+@export_group("Fase")
+@export var proxima_fase_path: String = ""
 
 @export_group("Audio")
-# Distância MÁXIMA de onde o som espacial do dígrafo é audível (em pixels).
-# Reduzido para 300.0 para um alcance mais localizado.
-@export var digrafo_sound_falloff_distance = 300.0 
+@export var digrafo_sound_falloff_distance = 300.0
 
-# Referência ao nó Label para exibir legendas. 
-# Deve ser arrastado do Inspetor.
+@export_group("HUD")
+@export var nome_da_fase: String = "Fase Desconhecida"
+@export var hud_display_time: float = 3.0
+
+@onready var nome_fase = $"HUDKael/NomeFase"
+@onready var hud_timer = $"HUDKael/HUDTimer"
+
 @export var subtitle_label: Label 
 
 # Dicionário de narrações (texto e caminho para o arquivo de áudio)
@@ -33,6 +37,25 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var jump = $Jump
 @onready var restore_digrafo = $RestoreDigrafo
 @onready var narration_player = $NarrationPlayer
+
+func _ready() -> void:
+	if is_instance_valid(nome_fase) and is_instance_valid(hud_timer):
+		
+		# --- TESTE DE EXECUÇÃO ---
+		print("HUD de Fase: Pronto. Tentando exibir: ", nome_da_fase)
+		
+		nome_fase.text = nome_da_fase
+		hud_timer.wait_time = hud_display_time
+		
+		# 2. Conecta o sinal do Timer para esconder o HUD
+		# Verifica se a conexão já existe antes de tentar conectar (boa prática)
+		if not hud_timer.timeout.is_connected(hide_fase_hud):
+			hud_timer.timeout.connect(hide_fase_hud)
+		
+		# 3. Exibe o HUD e inicia o Timer
+		show_fase_hud()
+	else:
+		print("ERRO CRÍTICO: Um ou mais nós do HUD não foram encontrados. (HUDKael/NomeFase ou HUDKael/HUDTimer)")
 
 
 func _physics_process(delta: float) -> void:
@@ -136,7 +159,6 @@ func _on_digrafo_1_area_entered(area: Area2D) -> void:
 
 	# 3. Dispara a narração e legendas
 	play_narration(narration_data["Digrafo1"])
-	score += 1
 
 
 func _on_digrafo_2_area_entered(area: Area2D) -> void:
@@ -155,7 +177,6 @@ func _on_digrafo_2_area_entered(area: Area2D) -> void:
 
 	# 3. Dispara a narração e legendas
 	play_narration(narration_data["Digrafo2"])
-	score += 1
 
 
 func _on_digrafo_3_area_entered(area: Area2D) -> void:
@@ -174,4 +195,23 @@ func _on_digrafo_3_area_entered(area: Area2D) -> void:
 
 	# 3. Dispara a narração e legendas
 	play_narration(narration_data["Digrafo3"])
-	score += 1
+
+
+func _on_fim_de_cena_body_entered(body: Node2D) -> void:
+	if body == self: 
+		
+		if not proxima_fase_path.is_empty():
+			get_tree().change_scene_to_file(proxima_fase_path)
+		else:
+			nome_fase.hide()
+			get_tree().quit()
+
+
+func show_fase_hud():
+	if is_instance_valid(nome_fase) and is_instance_valid(hud_timer):
+		nome_fase.show()
+		hud_timer.start()
+
+func hide_fase_hud():
+		if is_instance_valid(nome_fase):
+			nome_fase.hide()
