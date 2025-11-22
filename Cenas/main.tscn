@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://b456ptsbwt4mh"]
+[gd_scene load_steps=32 format=4 uid="uid://b456ptsbwt4mh"]
 
 [ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="1_74bqr"]
 [ext_resource type="Script" uid="uid://puybw3u34ccx" path="res://Cenas/main.gd" id="1_330ga"]
@@ -17,7 +17,12 @@
 [ext_resource type="AudioStream" uid="uid://dr8dxchb2kk8u" path="res://Sounds/fase1.wav" id="14_330ga"]
 [ext_resource type="Texture2D" uid="uid://c48ud7cx5wkbf" path="res://Sprites/Digrafos/Sc.png" id="14_xaxpv"]
 [ext_resource type="AudioStream" uid="uid://c68qdga4ywh2d" path="res://Sounds/digrafo.wav" id="16_xaxpv"]
+[ext_resource type="Texture2D" uid="uid://djqmf65qe0gj6" path="res://Sprites/Digrafos/Ss.png" id="17_erht2"]
 [ext_resource type="PackedScene" uid="uid://cq33hqs23ofu4" path="res://Cenas/hud.tscn" id="18_neu2f"]
+[ext_resource type="Texture2D" uid="uid://bwu05n7qwfmhv" path="res://Sprites/Digrafos/Ch.png" id="18_vi8pf"]
+[ext_resource type="Script" uid="uid://cwjwoik10bhkw" path="res://Cenas/controles_hud.gd" id="21_vi8pf"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_neu2f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_74bqr"]
 texture = ExtResource("1_74bqr")
@@ -804,11 +809,33 @@ size = Vector2(2557.5, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_330ga"]
 size = Vector2(24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_3ea3k"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_vgp11"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("14_xaxpv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_do340"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_erht2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mhom4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_vi8pf")
 }],
 "loop": true,
 "name": &"default",
@@ -825,6 +852,9 @@ script = ExtResource("1_330ga")
 position = Vector2(121, 555)
 proxima_fase_path = "res://Cenas/fase_2.tscn"
 nome_da_fase = "Fase 1: Pântano de Nhálea"
+nome_do_digrafo1 = "Dígrafo Nh: Na manhã turva"
+nome_do_digrafo2 = "Dígrafo Lh: O brilho antigo"
+nome_do_digrafo3 = "Dígrafo Ch: Do trecho esculpido"
 
 [node name="HUDKael" type="CanvasLayer" parent="Kael"]
 
@@ -842,6 +872,26 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HUDTimer" type="Timer" parent="Kael/HUDKael"]
+
+[node name="HUDDigrafo" type="CanvasLayer" parent="Kael"]
+
+[node name="FraseDigrafo" type="Label" parent="Kael/HUDDigrafo"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(7.508397e-06, 0.7049897, 0.934254, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ir430")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxLine_neu2f")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerDigrafo" type="Timer" parent="Kael/HUDDigrafo"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-1, 0)
@@ -975,7 +1025,7 @@ shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo1"]
 position = Vector2(2.842171e-14, -1.1368684e-13)
-sprite_frames = SubResource("SpriteFrames_3ea3k")
+sprite_frames = SubResource("SpriteFrames_vgp11")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo1"]
 stream = ExtResource("16_xaxpv")
@@ -989,7 +1039,7 @@ shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo2"]
 position = Vector2(2.842171e-14, -1.1368684e-13)
-sprite_frames = SubResource("SpriteFrames_3ea3k")
+sprite_frames = SubResource("SpriteFrames_do340")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo2"]
 stream = ExtResource("16_xaxpv")
@@ -1003,7 +1053,7 @@ shape = SubResource("RectangleShape2D_330ga")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo3"]
 position = Vector2(2.842171e-14, -1.1368684e-13)
-sprite_frames = SubResource("SpriteFrames_3ea3k")
+sprite_frames = SubResource("SpriteFrames_mhom4")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo3"]
 stream = ExtResource("16_xaxpv")
@@ -1022,6 +1072,43 @@ shape = SubResource("RectangleShape2D_xaxpv")
 debug_color = Color(0.47852963, 0.5883302, 1.92523e-07, 0.41960785)
 
 [node name="HUD" parent="." instance=ExtResource("18_neu2f")]
+
+[node name="ControlesHUD" type="CanvasLayer" parent="."]
+script = ExtResource("21_vi8pf")
+
+[node name="PainelControles" type="Control" parent="ControlesHUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="ControlesHBox" type="VBoxContainer" parent="ControlesHUD/PainelControles"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -26.0
+offset_right = 56.0
+offset_bottom = 26.0
+grow_vertical = 2
+
+[node name="LabelMover" type="Label" parent="ControlesHUD/PainelControles/ControlesHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ir430")
+theme_override_font_sizes/font_size = 16
+
+[node name="LabelPular" type="Label" parent="ControlesHUD/PainelControles/ControlesHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ir430")
+theme_override_font_sizes/font_size = 16
+
+[node name="Timer" type="Timer" parent="ControlesHUD/PainelControles"]
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_entered" from="Area2D" to="Kael" method="_on_area_2d_area_entered"]

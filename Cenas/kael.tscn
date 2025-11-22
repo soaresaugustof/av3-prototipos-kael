@@ -98,6 +98,7 @@ scale = Vector2(0.5, 0.5)
 offset = Vector2(30, 0)
 zoom = Vector2(3, 3)
 limit_left = -15
+limit_right = 2110
 limit_bottom = 630
 
 [node name="Area2D" type="Area2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cp1g8y042q5o3"]
+[gd_scene load_steps=22 format=4 uid="uid://cp1g8y042q5o3"]
 
 [ext_resource type="PackedScene" uid="uid://dnm0f5ydoa0xq" path="res://Cenas/kael.tscn" id="1_o5jdt"]
 [ext_resource type="Texture2D" uid="uid://g2m1sr4edbfg" path="res://Sprites/Novo Projeto (3).png" id="2_15i4r"]
@@ -7,9 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://dalm8v4off5gg" path="res://Sprites/background.png" id="5_jf64f"]
 [ext_resource type="Texture2D" uid="uid://2pxk5hnflwab" path="res://Sprites/background2.png" id="6_0v05o"]
 [ext_resource type="AudioStream" uid="uid://4ilolb3n1wb7" path="res://Sounds/fase2.wav" id="6_jf64f"]
-[ext_resource type="Texture2D" uid="uid://c48ud7cx5wkbf" path="res://Sprites/Digrafos/Sc.png" id="7_ev8p6"]
+[ext_resource type="Texture2D" uid="uid://dfrmd1b4qx7qp" path="res://Sprites/Digrafos/Nh.png" id="8_41b7u"]
 [ext_resource type="AudioStream" uid="uid://c68qdga4ywh2d" path="res://Sounds/digrafo.wav" id="8_mvsrr"]
+[ext_resource type="Texture2D" uid="uid://dfe6t0pd73rqt" path="res://Sprites/Digrafos/Rr.png" id="10_csihj"]
 [ext_resource type="PackedScene" uid="uid://cq33hqs23ofu4" path="res://Cenas/hud.tscn" id="10_f7siq"]
+[ext_resource type="Texture2D" uid="uid://b0h44gfmc8ar5" path="res://Sprites/Digrafos/Gu.png" id="11_ymtww"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6odrp"]
 texture = ExtResource("2_15i4r")
@@ -828,11 +830,33 @@ size = Vector2(31, 141.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7siq"]
 size = Vector2(24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_o7qfa"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_i0tsi"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_ev8p6")
+"texture": ExtResource("8_41b7u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ueqr2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_csihj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_imh4f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_ymtww")
 }],
 "loop": true,
 "name": &"default",
@@ -844,7 +868,10 @@ animations = [{
 [node name="Kael" parent="." instance=ExtResource("1_o5jdt")]
 position = Vector2(212, 545)
 proxima_fase_path = "res://Cenas/fase_3.tscn"
-nome_da_fase = "Fase 2:  Ruínas de Quelhar"
+nome_da_fase = "Fase 2: Ruínas de Quelhar"
+nome_do_digrafo1 = "Dígrafo Qu: Quebrou o silêncio"
+nome_do_digrafo2 = "Dígrafo Gu: Surgiu, nos guiou"
+nome_do_digrafo3 = "Dígrafo Rr: O guerreiro"
 
 [node name="HUDKael" type="CanvasLayer" parent="Kael"]
 
@@ -862,6 +889,23 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HUDTimer" type="Timer" parent="Kael/HUDKael"]
+
+[node name="HUDDigrafo" type="CanvasLayer" parent="Kael"]
+
+[node name="FraseDigrafo" type="Label" parent="Kael/HUDDigrafo"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0.62352943, 1, 1)
+theme_override_fonts/font = ExtResource("2_mvsrr")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerDigrafo" type="Timer" parent="Kael/HUDDigrafo"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-1, 0)
@@ -914,7 +958,7 @@ shape = SubResource("RectangleShape2D_f7siq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo1"]
 position = Vector2(2.842171e-14, -1.1368684e-13)
-sprite_frames = SubResource("SpriteFrames_o7qfa")
+sprite_frames = SubResource("SpriteFrames_i0tsi")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo1"]
 stream = ExtResource("8_mvsrr")
@@ -928,7 +972,7 @@ shape = SubResource("RectangleShape2D_f7siq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo2"]
 position = Vector2(2.842171e-14, -1.1368684e-13)
-sprite_frames = SubResource("SpriteFrames_o7qfa")
+sprite_frames = SubResource("SpriteFrames_ueqr2")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo2"]
 stream = ExtResource("8_mvsrr")
@@ -942,7 +986,7 @@ shape = SubResource("RectangleShape2D_f7siq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Digrafo3"]
 position = Vector2(2.842171e-14, -1.1368684e-13)
-sprite_frames = SubResource("SpriteFrames_o7qfa")
+sprite_frames = SubResource("SpriteFrames_imh4f")
 
 [node name="SomDigrafo" type="AudioStreamPlayer2D" parent="Digrafo3"]
 stream = ExtResource("8_mvsrr")

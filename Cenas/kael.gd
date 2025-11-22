@@ -9,6 +9,7 @@ class_name Kael
 
 @export_group("Fase")
 @export var proxima_fase_path: String = ""
+@export var tela_vitoria_path: String = "res://Cenas/tela_vitoria.tscn"
 
 @export_group("Audio")
 @export var digrafo_sound_falloff_distance = 300.0
@@ -17,14 +18,24 @@ class_name Kael
 @export var nome_da_fase: String = "Fase Desconhecida"
 @export var hud_display_time: float = 3.0
 
+@export_group("Hud Digrafo")
+@export var nome_do_digrafo1: String = "Digrafo Desconhecido"
+@export var nome_do_digrafo2: String = "Digrafo Desconhecido"
+@export var nome_do_digrafo3: String = "Digrafo Desconhecido"
+@export var digrafo_display_time: float = 3.0
+
 @onready var nome_fase = $"HUDKael/NomeFase"
 @onready var hud_timer = $"HUDKael/HUDTimer"
 
-@export var subtitle_label: Label 
+@onready var nome_digrafo = $"HUDDigrafo/FraseDigrafo"
+@onready var digrafo_timer = $"HUDDigrafo/TimerDigrafo"
+
+@export var subtitle_label: Label
 
 @export var MaxScore = 3
 @export var score = 0
 
+var frase_completa = "Na manhã turva, o brilho antigo do trecho esculpido surgiu, nos guiou e quebrou o silêncio, esclarecendo o rumo que ressurgiu após o caos para o guerreiro."
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -97,7 +108,7 @@ func _update_digrafo_volume():
 func play_narration(data: Dictionary):
 	if is_instance_valid(narration_player):
 		# 1. Carrega e toca o áudio narrado
-		var narration_stream = load(data.audio_path) 
+		var narration_stream = load(data.audio_path)
 		narration_player.stream = narration_stream
 		narration_player.play()
 	
@@ -112,11 +123,12 @@ func hide_subtitle():
 		subtitle_label.hide()
 
 
-
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area is Area2D:
 		get_tree().change_scene_to_file("res://Cenas/game_over.tscn")
 
+
+# --- Funções de Coleta do Dígrafo (Corrigidas) ---
 
 func _on_digrafo_1_area_entered(area: Area2D) -> void:
 	var digrafo_node = $"../Digrafo1"
@@ -125,14 +137,24 @@ func _on_digrafo_1_area_entered(area: Area2D) -> void:
 	if is_instance_valid(som_digrafo):
 		som_digrafo.stop()
 		som_digrafo.queue_free()
+	
+	nome_digrafo.text = nome_do_digrafo1
+	digrafo_timer.wait_time = digrafo_display_time
 		
+	# Conecta APENAS UMA VEZ
+	if not digrafo_timer.timeout.is_connected(hide_digrafo_hud):
+		digrafo_timer.timeout.connect(hide_digrafo_hud)
+		
+	# CHAMA SEMPRE (Correção de Bug)
+	show_digrafo_hud() 
+	
 	digrafo_node.find_child("AnimatedSprite2D").visible = false
 	$"../Digrafo1/CollisionShape2D".queue_free()
 
-	restore_digrafo.play() 
+	restore_digrafo.play()
 
 	score += 1
-
+	
 
 func _on_digrafo_2_area_entered(area: Area2D) -> void:
 	var digrafo_node = $"../Digrafo2"
@@ -141,11 +163,21 @@ func _on_digrafo_2_area_entered(area: Area2D) -> void:
 	if is_instance_valid(som_digrafo):
 		som_digrafo.stop()
 		som_digrafo.queue_free()
+	
+	nome_digrafo.text = nome_do_digrafo2
+	digrafo_timer.wait_time = digrafo_display_time
 		
+	# Conecta APENAS UMA VEZ
+	if not digrafo_timer.timeout.is_connected(hide_digrafo_hud):
+		digrafo_timer.timeout.connect(hide_digrafo_hud)
+		
+	# CHAMA SEMPRE (Correção de Bug)
+	show_digrafo_hud()
+	
 	digrafo_node.find_child("AnimatedSprite2D").visible = false
 	$"../Digrafo2/CollisionShape2D".queue_free()
 
-	restore_digrafo.play() 
+	restore_digrafo.play()
 
 	score += 1
 
@@ -157,36 +189,63 @@ func _on_digrafo_3_area_entered(area: Area2D) -> void:
 	if is_instance_valid(som_digrafo):
 		som_digrafo.stop()
 		som_digrafo.queue_free()
+	
+	nome_digrafo.text = nome_do_digrafo3
+	digrafo_timer.wait_time = digrafo_display_time
 		
+	# Conecta APENAS UMA VEZ
+	if not digrafo_timer.timeout.is_connected(hide_digrafo_hud):
+		digrafo_timer.timeout.connect(hide_digrafo_hud)
+		
+	# CHAMA SEMPRE (Correção de Bug)
+	show_digrafo_hud()
+	
 	digrafo_node.find_child("AnimatedSprite2D").visible = false
 	$"../Digrafo3/CollisionShape2D".queue_free()
 
-	restore_digrafo.play() 
+	restore_digrafo.play()
 
 	score += 1
 	
-	if nome_da_fase == "Fase Final: Torre do Silêncio":
+	# --- LÓGICA DE DERROTA DO VORATH E FIM DE JOGO (Corrigida e Indentada) ---
+	
+	if nome_da_fase == "Fase Final: Torre do Silêncio": 
 		var vorath_node = get_parent().find_child("Vorath")
 		
 		if is_instance_valid(vorath_node):
-			print("Último Dígrafo (Digrafo3) coletado! Acionando derrota do Vorath.")
+			print("Último Dígrafo coletado. Acionando derrota do Vorath.")
 			
-			(vorath_node as Vorath).defeat()
+			var vorath_script = vorath_node as Vorath
+			
+			if is_instance_valid(vorath_script):
+				vorath_script.defeat()
+			else:
+				print("ERRO: Script Vorath não encontrado. Usando call().")
+				vorath_node.call("defeat")
+
+			# Timer de 4s para animação e transição
+			get_tree().create_timer(4.0).timeout.connect(
+				func():
+					if not tela_vitoria_path.is_empty():
+						get_tree().change_scene_to_file(tela_vitoria_path)
+					else:
+						get_tree().quit()
+			)
 		else:
-			if is_instance_valid(nome_fase):
-				nome_fase.hide()
-			
-			get_tree().quit()
+			# Se o Vorath não foi encontrado na fase final, transiciona imediatamente
+			if not tela_vitoria_path.is_empty():
+				get_tree().change_scene_to_file(tela_vitoria_path)
+			else:
+				get_tree().quit()
 
 
 func _on_fim_de_cena_body_entered(body: Node2D) -> void:
-	if body == self: 
+	if body == self:
 		
 		if not proxima_fase_path.is_empty():
 			get_tree().change_scene_to_file(proxima_fase_path)
 		else:
-			nome_fase.hide()
-			get_tree().quit()
+			pass
 
 
 func show_fase_hud():
@@ -195,5 +254,14 @@ func show_fase_hud():
 		hud_timer.start()
 
 func hide_fase_hud():
-		if is_instance_valid(nome_fase):
-			nome_fase.hide()
+	if is_instance_valid(nome_fase):
+		nome_fase.hide()
+
+func show_digrafo_hud():
+	if is_instance_valid(nome_digrafo) and is_instance_valid(digrafo_timer):
+		nome_digrafo.show()
+		digrafo_timer.start()
+
+func hide_digrafo_hud():
+	if is_instance_valid(nome_digrafo):
+		nome_digrafo.hide()

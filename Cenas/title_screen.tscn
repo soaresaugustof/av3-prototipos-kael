@@ -1,13 +1,32 @@
-[gd_scene load_steps=7 format=3 uid="uid://cpup3c0fm8ec3"]
+[gd_scene load_steps=10 format=3 uid="uid://cpup3c0fm8ec3"]
 
 [ext_resource type="Script" uid="uid://dfl3r8ynipwop" path="res://Cenas/title_screen.gd" id="1_in1uv"]
 [ext_resource type="Texture2D" uid="uid://dalm8v4off5gg" path="res://Sprites/background.png" id="1_rg7y1"]
 [ext_resource type="Texture2D" uid="uid://ceaobb5ttigf3" path="res://Sprites/adventurer-idle-00.png" id="2_in1uv"]
 [ext_resource type="FontFile" uid="uid://2jb60851ilq6" path="res://font/antiquity-print.ttf" id="3_147ya"]
 [ext_resource type="AudioStream" uid="uid://cn0xtganyxyof" path="res://Sounds/InicioKael.mp3" id="5_147ya"]
+[ext_resource type="Texture2D" uid="uid://cdgn4i7gs7lxn" path="res://Sprites/adventurer-idle-01.png" id="6_l05ng"]
+[ext_resource type="Texture2D" uid="uid://bqxtr2lffdvly" path="res://Sprites/adventurer-idle-02.png" id="7_rv274"]
 
 [sub_resource type="Theme" id="Theme_rg7y1"]
 Button/colors/font_color = Color(1, 1, 1, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6un67"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_in1uv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_l05ng")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rv274")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -68,17 +87,6 @@ theme_override_font_sizes/font_size = 20
 text = "Sair
 "
 
-[node name="MOCHI" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 778.0
-offset_top = 211.0
-offset_right = 1674.0
-offset_bottom = 1107.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_in1uv")
-expand_mode = 2
-flip_h = true
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_147ya")
 autoplay = true
@@ -100,6 +108,12 @@ theme_override_colors/font_color = Color(1, 0.34901962, 0.23529412, 1)
 theme_override_fonts/font = ExtResource("3_147ya")
 theme_override_font_sizes/font_size = 46
 text = "Kael e o Obelisco dos Sons"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(196, 434.99997)
+scale = Vector2(11.820944, 11.820945)
+sprite_frames = SubResource("SpriteFrames_6un67")
+autoplay = "default"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/START" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SAIR" to="." method="_on_sair_pressed"]
