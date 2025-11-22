@@ -2,11 +2,13 @@ extends Control
 
 
 var falas = [
-	"No centro de Letrânia, a magia nasce das palavras.",
-	"O Obelisco dos Sons foi destruído por Vorath, o Silenciador.",
+	"No centro de Letrania, a magia nasce das palavras.",
+	"E as palavras quee protegem o reino ficam no Obelisco dos Sons, criado pelo fundador Rei-Mago Verbus Letrania I",
+	"Mas, ele foi destruído por Vorath, o Silenciador. Onde em tempos antigos tivera sido o conselheiro do atual Rei de Letrania, Frasius Letrania II",
 	"Sem ele, a fala do povo se fragmentou… e a magia se perdeu.",
-	"Somente você, Kael Verbatim, pode restaurar os dígrafos sagrados.",
-    "Sua jornada começa agora."
+	"Somente Kael Verbatim, o maior aventureiro do Reino, pode restaurar os dígrafos sagrados.",
+	"Prepare-se para uma jornada de buscas e aprendizados de linguagem.",
+    "Ela começa agora."
 ]
 
 var indice_fala = 0
